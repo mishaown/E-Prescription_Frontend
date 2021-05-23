@@ -25,8 +25,8 @@ class UI {
         div.appendChild(document.createTextNode(msg));
 
         //Grub the place where i want to put this
-        const container = document.querySelector('.wrapper');
-        const form = document.querySelector('#brREG');
+        const container = document.querySelector('.container');
+        const form = document.querySelector('#ID_FORM');
 
         container.insertBefore(div, form);
 
@@ -68,7 +68,7 @@ class SERVE {
                 password: user.password
                 })
             }
-            const req = await fetch(' http://127.0.0.1:5050/api/0/people/reg', options)
+            const req = await fetch(' http://127.0.0.1:5000/api/0/people/reg', options)
             const data = await req.json();
 
             // LOGGGING DATA
@@ -76,18 +76,18 @@ class SERVE {
 
 
             if (data.success === false ) {
-                UI.showAlert('Mis-Match! Somewthing went wrong.', 'yellow')
+                UI.showAlert('Mis-Match! Somewthing went wrong.', 'alert-danger')
                 }
 
             if (data.success === true ) {
-                UI.showAlert('Account Created Successfully.', 'green')
+                UI.showAlert('Account Created Successfully.', 'alert-info')
             }
     }
 }
 
 
 // EVENTS 
-document.querySelector('#reg-form').addEventListener('submit', (event)=>{
+document.querySelector('#submitBtn').addEventListener('click', (event)=>{
     event.preventDefault();
 
     // GET VALUES FROM FORM 
@@ -105,7 +105,7 @@ document.querySelector('#reg-form').addEventListener('submit', (event)=>{
 
     if(firstName === '' || lastName === '' || nid === ''|| selectGender === ''||
         birthDate === ''|| postCode === ''|| email === ''|| phoneNumber === ''|| password === '') {
-            UI.showAlert('Please fill all the fields', 'yellow')
+            UI.showAlert('Please fill all the fields', 'alert-warning')
     
     } else {
         const user = new USER(firstName, lastName, nid, selectGender, birthDate, postCode, email, phoneNumber, password);
@@ -113,7 +113,7 @@ document.querySelector('#reg-form').addEventListener('submit', (event)=>{
         SERVE.postData(user);
     
         // CLEAR FIELDS 
-        // UI.clearField();
+        UI.clearField();
     }
 
 })
